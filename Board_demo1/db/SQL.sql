@@ -1,146 +1,152 @@
--- »ç¿ëÀÚ
-ALTER TABLE TB_USER
-  DROP CONSTRAINT PK_TB_USER; -- »ç¿ëÀÚ ±âº»Å°
+cmd> sqlplus "sys as sysdba"
+create user TOBI identified by TOBI123;
+grant connect, resource to TOBI;
+grant create view to TOBI;
+conn TOBI/TOBI123
 
--- »ç¿ëÀÚ
+-- ì‚¬ìš©ìž
+ALTER TABLE TB_USER
+  DROP CONSTRAINT PK_TB_USER; -- ì‚¬ìš©ìž ê¸°ë³¸í‚¤
+
+-- ì‚¬ìš©ìž
 DROP TABLE TB_USER;
 
--- »ç¿ëÀÚ
+-- ì‚¬ìš©ìž
 CREATE TABLE TB_USER (
-  ID       VARCHAR(18)  NOT NULL, -- ¾ÆÀÌµð
-  PW       VARCHAR2(18) NOT NULL, -- ºñ¹Ð¹øÈ£
-  NAME     VARCHAR2(20) NOT NULL, -- ÀÌ¸§
-  NICKNAME VARCHAR2(20) NULL,     -- ´Ð³×ÀÓ
-  EMAIL    VARCHAR2(30) NOT NULL, -- ÀÌ¸ÞÀÏ
-  DELYN    VARCHAR2(1)  NULL      -- Å»Åð¿©ºÎ
+  ID       VARCHAR(18)  NOT NULL, -- ì•„ì´ë””
+  PW       VARCHAR2(18) NOT NULL, -- ë¹„ë°€ë²ˆí˜¸
+  NAME     VARCHAR2(20) NOT NULL, -- ì´ë¦„
+  NICKNAME VARCHAR2(20) NULL,     -- ë‹‰ë„¤ìž„
+  EMAIL    VARCHAR2(30) NOT NULL, -- ì´ë©”ì¼
+  DELYN    VARCHAR2(1)  NULL      -- íƒˆí‡´ì—¬ë¶€
 );
 
--- »ç¿ëÀÚ ±âº»Å°
+-- ì‚¬ìš©ìž ê¸°ë³¸í‚¤
 CREATE UNIQUE INDEX PK_TB_USER
-  ON TB_USER ( -- »ç¿ëÀÚ
-    ID ASC -- ¾ÆÀÌµð
+  ON TB_USER ( -- ì‚¬ìš©ìž
+    ID ASC -- ì•„ì´ë””
   );
 
--- »ç¿ëÀÚ
+-- ì‚¬ìš©ìž
 ALTER TABLE TB_USER
   ADD
-    CONSTRAINT PK_TB_USER -- »ç¿ëÀÚ ±âº»Å°
+    CONSTRAINT PK_TB_USER -- ì‚¬ìš©ìž ê¸°ë³¸í‚¤
     PRIMARY KEY (
-      ID -- ¾ÆÀÌµð
+      ID -- ì•„ì´ë””
     );
 
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 ALTER TABLE TB_BOARD
-  DROP CONSTRAINT FK_TB_USER_TO_TB_BOARD; -- »ç¿ëÀÚ -> °Ô½ÃÆÇ
+  DROP CONSTRAINT FK_TB_USER_TO_TB_BOARD; -- ì‚¬ìš©ìž -> ê²Œì‹œíŒ
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 ALTER TABLE TB_BOARD
-  DROP CONSTRAINT PK_TB_BOARD; -- °Ô½ÃÆÇ ±âº»Å°
+  DROP CONSTRAINT PK_TB_BOARD; -- ê²Œì‹œíŒ ê¸°ë³¸í‚¤
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 DROP TABLE TB_BOARD;
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 CREATE TABLE TB_BOARD (
-  BOARD_SEQ VARCHAR(18)    NOT NULL, -- °Ô½ÃÆÇ ½ÃÄö½º
-  NO        NUMBER         NULL,     -- ¹øÈ£
-  ID        VARCHAR(18)    NOT NULL, -- ¾ÆÀÌµð
-  TITLE     VARCHAR2(30)   NOT NULL, -- Á¦¸ñ
-  CONTENTS  VARCHAR2(1000) NULL,     -- ³»¿ë
-  READCNT   NUMBER         NULL,     -- Á¶È¸¼ö
-  HITCNT    NUMBER         NULL,     -- ÃßÃµ¼ö
-  DELYN     VARCHAR2(1)    NULL      -- »èÁ¦¿©ºÎ
+  BOARD_SEQ VARCHAR(18)    NOT NULL, -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
+  NO        NUMBER         NULL,     -- ë²ˆí˜¸
+  ID        VARCHAR(18)    NOT NULL, -- ì•„ì´ë””
+  TITLE     VARCHAR2(30)   NOT NULL, -- ì œëª©
+  CONTENTS  VARCHAR2(1000) NULL,     -- ë‚´ìš©
+  READCNT   NUMBER         NULL,     -- ì¡°íšŒìˆ˜
+  HITCNT    NUMBER         NULL,     -- ì¶”ì²œìˆ˜
+  DELYN     VARCHAR2(1)    NULL      -- ì‚­ì œì—¬ë¶€
 );
 
--- °Ô½ÃÆÇ ±âº»Å°
+-- ê²Œì‹œíŒ ê¸°ë³¸í‚¤
 CREATE UNIQUE INDEX PK_TB_BOARD
-  ON TB_BOARD ( -- °Ô½ÃÆÇ
-    BOARD_SEQ ASC -- °Ô½ÃÆÇ ½ÃÄö½º
+  ON TB_BOARD ( -- ê²Œì‹œíŒ
+    BOARD_SEQ ASC -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
   );
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 ALTER TABLE TB_BOARD
   ADD
-    CONSTRAINT PK_TB_BOARD -- °Ô½ÃÆÇ ±âº»Å°
+    CONSTRAINT PK_TB_BOARD -- ê²Œì‹œíŒ ê¸°ë³¸í‚¤
     PRIMARY KEY (
-      BOARD_SEQ -- °Ô½ÃÆÇ ½ÃÄö½º
+      BOARD_SEQ -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
     );
 
--- °Ô½ÃÆÇ
+-- ê²Œì‹œíŒ
 ALTER TABLE TB_BOARD
   ADD
-    CONSTRAINT FK_TB_USER_TO_TB_BOARD -- »ç¿ëÀÚ -> °Ô½ÃÆÇ
+    CONSTRAINT FK_TB_USER_TO_TB_BOARD -- ì‚¬ìš©ìž -> ê²Œì‹œíŒ
     FOREIGN KEY (
-      ID -- ¾ÆÀÌµð
+      ID -- ì•„ì´ë””
     )
-    REFERENCES TB_USER ( -- »ç¿ëÀÚ
-      ID -- ¾ÆÀÌµð
+    REFERENCES TB_USER ( -- ì‚¬ìš©ìž
+      ID -- ì•„ì´ë””
     )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
 
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
-  DROP CONSTRAINT FK_TB_BOARD_TO_TB_REPLY; -- °Ô½ÃÆÇ -> ´ñ±Û
+  DROP CONSTRAINT FK_TB_BOARD_TO_TB_REPLY; -- ê²Œì‹œíŒ -> ëŒ“ê¸€
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
-  DROP CONSTRAINT FK_TB_USER_TO_TB_REPLY; -- »ç¿ëÀÚ -> ´ñ±Û
+  DROP CONSTRAINT FK_TB_USER_TO_TB_REPLY; -- ì‚¬ìš©ìž -> ëŒ“ê¸€
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
-  DROP CONSTRAINT PK_TB_REPLY; -- ´ñ±Û ±âº»Å°
+  DROP CONSTRAINT PK_TB_REPLY; -- ëŒ“ê¸€ ê¸°ë³¸í‚¤
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 DROP TABLE TB_REPLY;
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 CREATE TABLE TB_REPLY (
-  REPLY_SEQ VARCHAR(18)    NOT NULL, -- ´ñ±Û ½ÃÄö½º
-  BOARD_SEQ VARCHAR(18)    NOT NULL, -- °Ô½ÃÆÇ ½ÃÄö½º
-  ID        VARCHAR(18)    NOT NULL, -- ¾ÆÀÌµð
-  CONTENTS  VARCHAR2(1000) NULL,     -- ³»¿ë
-  DELYN     VARCHAR2(1)    NULL      -- »èÁ¦¿©ºÎ
+  REPLY_SEQ VARCHAR(18)    NOT NULL, -- ëŒ“ê¸€ ì‹œí€€ìŠ¤
+  BOARD_SEQ VARCHAR(18)    NOT NULL, -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
+  ID        VARCHAR(18)    NOT NULL, -- ì•„ì´ë””
+  CONTENTS  VARCHAR2(1000) NULL,     -- ë‚´ìš©
+  DELYN     VARCHAR2(1)    NULL      -- ì‚­ì œì—¬ë¶€
 );
 
--- ´ñ±Û ±âº»Å°
+-- ëŒ“ê¸€ ê¸°ë³¸í‚¤
 CREATE UNIQUE INDEX PK_TB_REPLY
-  ON TB_REPLY ( -- ´ñ±Û
-    REPLY_SEQ ASC -- ´ñ±Û ½ÃÄö½º
+  ON TB_REPLY ( -- ëŒ“ê¸€
+    REPLY_SEQ ASC -- ëŒ“ê¸€ ì‹œí€€ìŠ¤
   );
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
   ADD
-    CONSTRAINT PK_TB_REPLY -- ´ñ±Û ±âº»Å°
+    CONSTRAINT PK_TB_REPLY -- ëŒ“ê¸€ ê¸°ë³¸í‚¤
     PRIMARY KEY (
-      REPLY_SEQ -- ´ñ±Û ½ÃÄö½º
+      REPLY_SEQ -- ëŒ“ê¸€ ì‹œí€€ìŠ¤
     );
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
   ADD
-    CONSTRAINT FK_TB_BOARD_TO_TB_REPLY -- °Ô½ÃÆÇ -> ´ñ±Û
+    CONSTRAINT FK_TB_BOARD_TO_TB_REPLY -- ê²Œì‹œíŒ -> ëŒ“ê¸€
     FOREIGN KEY (
-      BOARD_SEQ -- °Ô½ÃÆÇ ½ÃÄö½º
+      BOARD_SEQ -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
     )
-    REFERENCES TB_BOARD ( -- °Ô½ÃÆÇ
-      BOARD_SEQ -- °Ô½ÃÆÇ ½ÃÄö½º
+    REFERENCES TB_BOARD ( -- ê²Œì‹œíŒ
+      BOARD_SEQ -- ê²Œì‹œíŒ ì‹œí€€ìŠ¤
     )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
 
--- ´ñ±Û
+-- ëŒ“ê¸€
 ALTER TABLE TB_REPLY
   ADD
-    CONSTRAINT FK_TB_USER_TO_TB_REPLY -- »ç¿ëÀÚ -> ´ñ±Û
+    CONSTRAINT FK_TB_USER_TO_TB_REPLY -- ì‚¬ìš©ìž -> ëŒ“ê¸€
     FOREIGN KEY (
-      ID -- ¾ÆÀÌµð
+      ID -- ì•„ì´ë””
     )
-    REFERENCES TB_USER ( -- »ç¿ëÀÚ
-      ID -- ¾ÆÀÌµð
+    REFERENCES TB_USER ( -- ì‚¬ìš©ìž
+      ID -- ì•„ì´ë””
     )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
